@@ -24,8 +24,8 @@
         <button class="nav" data-view="method"><span>⌘</span>Metodología</button>
     </nav>
     <div class="sidefoot">
-        <div class="private">◈ &nbsp; Instantánea de investigación</div>
-        <br><b>Una decisión, con evidencia.</b><br>Datos y Analítica · México<br>Estudio prospectivo 2026<br><br>Por
+        <div class="private">◈ &nbsp; Seguimiento de vacantes</div>
+        <br>Datos y Analítica · México<br>Estudio prospectivo 2026<br><br>Por
         Sidhartha Manríquez
     </div>
 </aside>
@@ -38,8 +38,7 @@
         <div class="eyebrow">PANEL DE SEGUIMIENTO · 2026</div>
         <div class="heading">
             <div><h1 id="pagetitle">Mercado laboral de Datos y Analítica</h1>
-                <p class="subtitle">Cinco plataformas. Un mismo criterio. Instantánea actualizada por las tareas de
-                    seguimiento.</p></div>
+                <p class="subtitle">Observaciones diarias y cortes semanales para Indeed, OCC, Get on Board, Wellfound y LinkedIn.</p></div>
             <div class="actions">
                 <button class="btn" id="refresh">↻ Actualizar</button>
                 <button class="btn primary" id="export">↓ Exportar datos</button>
@@ -48,7 +47,7 @@
         <div class="period">
             <div>▣ &nbsp; <b>25 de noviembre — 20 de diciembre de 2026</b> &nbsp; <span class="tag gray">26 días · 4 cortes</span>
             </div>
-            <div id="lastupdate" class="statusline">Instantánea al 25 de noviembre de 2026</div>
+            <div id="lastupdate" class="statusline">Consultando la base</div>
         </div>
         <div class="filters" id="filters"><label>Plataforma<select id="platform">
             <option value="">Todas las plataformas</option>
@@ -85,12 +84,12 @@
             <option>No informado</option>
         </select></label><label>Desde<input type="date" id="from" value="2026-11-25" min="2026-11-25" max="2026-12-20"></label><label>Hasta<input
                 type="date" id="to" value="2026-12-20" min="2026-11-25" max="2026-12-20"></label></div>
-        <div class="loader" id="loading" role="status">Preparando análisis en Python…</div>
+        <div class="loader" id="loading" role="status">Consultando PostgreSQL…</div>
         <section class="view active" id="overview">
             <div class="cards">
                 <article class="card metric">
                     <div class="label">Anuncios observados <span>↗</span></div>
-                    <div class="value" id="mobserved">4</div>
+                    <div class="value" id="mobserved">N/D</div>
                     <div class="caption">IDs distintos por plataforma</div>
                 </article>
                 <article class="card metric">
@@ -101,11 +100,11 @@
                 <article class="card metric">
                     <div class="label">Publicaciones nuevas <span>＋</span></div>
                     <div class="value" id="mnew">N/D</div>
-                    <div class="caption">Fecha original y cobertura equivalentes</div>
+                    <div class="caption">Fecha original documentada</div>
                 </article>
                 <article class="card metric">
                     <div class="label">Cobertura completa <span>◈</span></div>
-                    <div class="value" id="mcoverage">0 / 5</div>
+                    <div class="value" id="mcoverage">N/D</div>
                     <div class="caption">Plataformas en su última captura</div>
                 </article>
             </div>
@@ -119,28 +118,9 @@
                 <article class="card">
                     <div class="sectionhead">
                         <div><h2>Anuncios por plataforma</h2>
-                            <p>Inventario observado · no equivale a aperturas ni contratación</p></div>
-                        <span class="tag gray">Python</span></div>
-                    <div id="platformchart" class="chart">
-                        <svg viewBox="0 0 460 265" role="img" aria-label="Anuncios observados por plataforma"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="26" fill="#53635f" font-size="12">Indeed</text>
-                            <rect x="158" y="12" width="250.0" height="23" rx="4" fill="#087f72"/>
-                            <text x="425" y="28" fill="#173d36" font-size="13">1</text>
-                            <text x="0" y="74" fill="#53635f" font-size="12">OCC</text>
-                            <rect x="158" y="60" width="1" height="23" rx="4" fill="#087f72"/>
-                            <text x="425" y="76" fill="#173d36" font-size="13">0</text>
-                            <text x="0" y="122" fill="#53635f" font-size="12">Get on Board</text>
-                            <rect x="158" y="108" width="250.0" height="23" rx="4" fill="#087f72"/>
-                            <text x="425" y="124" fill="#173d36" font-size="13">1</text>
-                            <text x="0" y="170" fill="#53635f" font-size="12">Wellfound</text>
-                            <rect x="158" y="156" width="250.0" height="23" rx="4" fill="#087f72"/>
-                            <text x="425" y="172" fill="#173d36" font-size="13">1</text>
-                            <text x="0" y="218" fill="#53635f" font-size="12">LinkedIn</text>
-                            <rect x="158" y="204" width="250.0" height="23" rx="4" fill="#087f72"/>
-                            <text x="425" y="220" fill="#173d36" font-size="13">1</text>
-                        </svg>
-                    </div>
+                            <p>Última observación de cada anuncio en el rango</p></div>
+                        </div>
+                    <div id="platformchart" class="chart"></div>
                     <div class="caption" id="dedupnote"></div>
                 </article>
                 <article class="card">
@@ -148,24 +128,7 @@
                         <div><h2>Estado de la captura</h2>
                             <p>Cobertura, incluso sin registros recuperados</p></div>
                         <span class="tag amber">Auditoría</span></div>
-                    <div id="coverage" class="coverage">
-                        <div class="covrow"><b>Indeed</b><span class="tag amber">Parcial</span>
-                            <div class="reason">Muestra de ficha almacenada; universo sin paginar<br>2026-11-25</div>
-                        </div>
-                        <div class="covrow"><b>OCC</b><span class="tag amber">Bloqueada</span>
-                            <div class="reason">Consulta directa bloqueada: HTTP 403<br>2026-11-25</div>
-                        </div>
-                        <div class="covrow"><b>Get on Board</b><span class="tag amber">Parcial</span>
-                            <div class="reason">Listado recuperado; ficha 403; sin cobertura de todo el protocolo<br>2026-11-25
-                            </div>
-                        </div>
-                        <div class="covrow"><b>Wellfound</b><span class="tag amber">Parcial</span>
-                            <div class="reason">Muestra de ficha almacenada; sin paginar<br>2026-11-25</div>
-                        </div>
-                        <div class="covrow"><b>LinkedIn</b><span class="tag amber">Parcial</span>
-                            <div class="reason">Resultado indexado; ficha bloqueada (DisabledError)<br>2026-11-25</div>
-                        </div>
-                    </div>
+                    <div id="coverage" class="coverage"></div>
                 </article>
             </div>
             <div class="grid2">
@@ -173,32 +136,15 @@
                     <div class="sectionhead">
                         <div><h2>Composición por especialidad</h2>
                             <p>Categoría principal de cada anuncio</p></div>
-                        <span class="tag gray">Python</span></div>
-                    <div id="familychart" class="chart">
-                        <svg viewBox="0 0 460 160" role="img" aria-label="Composición por especialidad"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="26" fill="#53635f" font-size="12">Ingeniería de Datos</text>
-                            <rect x="158" y="12" width="250.0" height="23" rx="4" fill="#087f72"/>
-                            <text x="425" y="28" fill="#173d36" font-size="13">3</text>
-                            <text x="0" y="74" fill="#53635f" font-size="12">Estrategia y Liderazgo</text>
-                            <rect x="158" y="60" width="83.33333333333333" height="23" rx="4" fill="#087f72"/>
-                            <text x="425" y="76" fill="#173d36" font-size="13">1</text>
-                        </svg>
-                    </div>
+                        </div>
+                    <div id="familychart" class="chart"></div>
                 </article>
                 <article class="card">
                     <div class="sectionhead">
-                        <div><h2>Última observación de los anuncios</h2>
-                            <p>Fecha de captura · distinta de la primera publicación</p></div>
-                        <span class="tag gray">Python</span></div>
-                    <div id="serieschart" class="chart">
-                        <svg viewBox="0 0 460 160" role="img" aria-label="Última observación por fecha"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="26" fill="#53635f" font-size="12">2026-11-25</text>
-                            <rect x="158" y="12" width="250.0" height="23" rx="4" fill="#087f72"/>
-                            <text x="425" y="28" fill="#173d36" font-size="13">4</text>
-                        </svg>
-                    </div>
+                        <div><h2>Historial diario de observaciones</h2>
+                            <p>Anuncios observados por fecha de captura, con sus revalidaciones</p></div>
+                        </div>
+                    <div id="serieschart" class="chart"></div>
                 </article>
             </div>
             <div id="previewtable"></div>
@@ -240,13 +186,23 @@
                             <th>Días válidos / transcurridos</th>
                             <th>Nuevas documentadas</th>
                             <th>Promedio diario</th>
-                            <th>Calidad</th>
+                            <th>Cobertura</th><th>Calidad</th>
                         </tr>
                         </thead>
                         <tbody id="weeklyrows"></tbody>
                     </table>
                 </div>
             </article>
+            <div class="grid2 history-grid">
+                <article class="card"><h2 class="smalltitle">Cobertura semanal</h2>
+                    <p class="caption">Plataformas-día completas sobre el total transcurrido.</p>
+                    <div id="weeklycoverage" class="chart"></div>
+                </article>
+                <article class="card"><h2 class="smalltitle">Promedio de publicaciones por día</h2>
+                    <p class="caption">Solo se calcula con cobertura válida en todo el rango transcurrido.</p>
+                    <div id="weeklymean" class="chart"></div>
+                </article>
+            </div>
             <article class="card" style="margin-top:20px"><h2 class="smalltitle">Informes de cierre</h2>
                 <div id="reviews" class="empty">Sin informes semanales todavía.</div>
             </article>
@@ -261,7 +217,17 @@
                 <article class="card">
                     <div class="eyebrow">COMPARACIÓN 2025 / 2026</div>
                     <div id="histcompare">N/D — Falta una base histórica equivalente.</div>
-                    <p class="caption">Sin pruebas estadísticas basadas en promedios hipotéticos.</p></article>
+                    <div id="comparisonchart" class="chart"></div></article>
+            </div>
+            <div class="grid2 history-grid">
+                <article class="card"><h2 class="smalltitle">Vigencia comprobada por día · 2026</h2>
+                    <p class="caption">Vacantes activas verificadas el día de la captura.</p>
+                    <div id="activehistory" class="chart"></div>
+                </article>
+                <article class="card"><h2 class="smalltitle">Publicaciones originales por día · 2026</h2>
+                    <p class="caption">Anuncios únicos con fecha original documentada.</p>
+                    <div id="newhistory" class="chart"></div>
+                </article>
             </div>
             <div class="card tablecard">
                 <div class="tablehead"><h2 class="smalltitle">Fuentes históricas registradas</h2>
@@ -298,23 +264,26 @@
                         <p>Explore escenarios aritméticos con sus propios supuestos</p></div>
                     <span class="tag amber">Hipotético</span></div>
                 <div class="sim"><label>Promedio diario anterior<input type="number" id="previous" min="0" step="0.1"
-                                                                       value="25"></label><label>Promedio diario
-                    actual<input type="number" id="current" min="0" step="0.1" value="2.5"></label><label class="full">Días
+                                                                       placeholder="Publicaciones/día"></label><label>Promedio diario
+                    actual<input type="number" id="current" min="0" step="0.1" placeholder="Publicaciones/día"></label><label class="full">Días
                     de proyección: <b id="dayslabel">30 días</b><input type="range" id="days" min="1" max="90"
                                                                        value="30"></label></div>
+                <div class="sim-source">
+                    <label>Promedio observado de 2026 <select id="meanSource"></select></label>
+                    <button class="btn" id="useMean" disabled>Usar en la simulación</button>
+                    <div id="simSourceNote" class="caption"></div>
+                </div>
                 <div class="simresult">
                     <div class="caption">Variación estimada</div>
-                    <div class="big" id="variation">−90.0 %</div>
+                    <div class="big" id="variation">N/D</div>
                     <div class="simnumbers">
-                        <div>Periodo anterior<b id="simprevious">750</b>Publicaciones proyectadas</div>
-                        <div>Periodo actual<b id="simcurrent">75</b>Publicaciones proyectadas</div>
-                        <div>Razón de tasas<b id="simirr">0.10</b>Sin inferencia</div>
+                        <div>Periodo anterior<b id="simprevious">N/D</b>Publicaciones proyectadas</div>
+                        <div>Periodo actual<b id="simcurrent">N/D</b>Publicaciones proyectadas</div>
+                        <div>Razón de tasas<b id="simirr">N/D</b>Sin inferencia</div>
                     </div>
                 </div>
                 <button class="btn" id="copy" style="margin-top:17px;width:100%">▢ Copiar resultados</button>
-                <p class="caption">25 y 2.5 provienen del ejemplo visual; no constituyen una serie validada. El cálculo
-                    multiplica promedios por días. No ajusta estacionalidad, duplicados ni días laborales. No se guarda
-                    como dato observado.</p></div>
+                <p class="caption">La proyección multiplica las tasas elegidas por los días del escenario. Los supuestos se introducen en los campos y no modifican las observaciones guardadas.</p></div>
         </section>
         <section class="view" id="method">
             <article class="card prose">
@@ -334,12 +303,7 @@
                 <p>Contactos de reclutadores, postulaciones, respuestas positivas y contrataciones requieren registros
                     propios. No se estiman con los anuncios. El IDLT y los contrastes quedan pendientes de una base
                     suficiente y comparable.</p>
-                <div class="actions"><a class="btn"
-                                        href="data:application/json;charset=utf-8,%7B%0A%20%20%22version%22%3A%221.0.0%22%2C%0A%20%20%22window%22%3A%7B%22start%22%3A%222026-11-25%22%2C%22end%22%3A%222026-12-20%22%2C%22timezone%22%3A%22America/Mexico_City%22%7D%2C%0A%20%20%22platforms%22%3A%5B%22Indeed%22%2C%22OCC%22%2C%22Get%20on%20Board%22%2C%22Wellfound%22%2C%22LinkedIn%22%5D%2C%0A%20%20%22families%22%3A%7B%0A%20%20%20%20%22Ingenier%C3%ADa%20de%20Datos%22%3A%5B%22Data%20Engineer%22%2C%22Senior%20Data%20Engineer%22%2C%22Ingeniero%20de%20Datos%22%2C%22Data%20Platform%20Engineer%22%2C%22Ingeniero%20de%20Plataforma%20de%20Datos%22%5D%2C%0A%20%20%20%20%22Arquitectura%20de%20Datos%22%3A%5B%22Data%20Architect%22%2C%22Arquitecto%20de%20Datos%22%2C%22Lakehouse%20Architect%22%5D%2C%0A%20%20%20%20%22Analytics%20Engineering%22%3A%5B%22Analytics%20Engineer%22%2C%22Ingeniero%20de%20Anal%C3%ADtica%22%5D%2C%0A%20%20%20%20%22BI%20y%20Anal%C3%ADtica%22%3A%5B%22Senior%20Data%20Analyst%22%2C%22Analista%20de%20Datos%20Senior%22%2C%22Business%20Intelligence%22%2C%22BI%20Lead%22%2C%22BI%20Developer%22%2C%22Advanced%20Analytics%22%2C%22Anal%C3%ADtica%20Avanzada%22%2C%22Business%20Analytics%22%5D%2C%0A%20%20%20%20%22Estrategia%20y%20Liderazgo%22%3A%5B%22Analytics%20Manager%22%2C%22Data%20%26%20Analytics%20Manager%22%2C%22Data%20Strategy%20Consultant%22%2C%22Data%20Consultant%22%2C%22Gerente%20de%20Anal%C3%ADtica%22%2C%22Consultor%20de%20Datos%22%5D%0A%20%20%7D%2C%0A%20%20%22rules%22%3A%5B%0A%20%20%20%20%22Mismos%20t%C3%A9rminos%20y%20filtros%20l%C3%B3gicos%20en%20las%20cinco%20plataformas%3B%20documentar%20toda%20limitaci%C3%B3n%20de%20filtros%20o%20paginaci%C3%B3n.%20Conservar%20todas%20las%20consultas%2C%20incluidas%20las%20que%20no%20produzcan%20registros.%22%2C%0A%20%20%20%20%22Sin%20filtro%20de%20seniority%3A%20capturar%20todos%20los%20niveles%20y%20guardar%20el%20nivel%20publicado%3B%20si%20se%20deriva%20de%20experiencia%20y%20responsabilidades%2C%20marcarlo%20como%20inferido%20con%20justificaci%C3%B3n.%20No%20confundir%20t%C3%ADtulo%20senior%20con%20clasificaci%C3%B3n%20de%20la%20plataforma.%22%2C%0A%20%20%20%20%22Mercado%20M%C3%A9xico%3A%20puesto%20localizado%20expl%C3%ADcitamente%20en%20M%C3%A9xico.%20Internacional%20elegible%3A%20empresa%20exterior%20y%20admisi%C3%B3n%20expl%C3%ADcita%20de%20residentes%20en%20M%C3%A9xico.%20LATAM%20gen%C3%A9rico%20sin%20elegibilidad%20expl%C3%ADcita%20queda%20pendiente%20y%20fuera%20del%20inventario%20elegible.%22%2C%0A%20%20%20%20%22Consulta%20inicial%3A%20inventario%20visible%20de%20cualquier%20antig%C3%BCedad.%20En%20consultas%20posteriores%3A%20buscar%20%C3%BAltimos%207%20d%C3%ADas%20cuando%20el%20filtro%20exista%2C%20cubrir%20d%C3%ADas%20transcurridos%20desde%20el%20%C3%BAltimo%20corte%20v%C3%A1lido%20y%20revalidar%20todas%20las%20fichas%20previas.%20No%20restringir%20la%20revalidaci%C3%B3n%20por%20antig%C3%BCedad.%22%2C%0A%20%20%20%20%22Fecha%20de%20publicaci%C3%B3n%20original%20solo%20cuando%20est%C3%A9%20documentada%3B%20conservar%20texto%20relativo%20y%20precisi%C3%B3n%20sin%20convertirlo%20en%20fecha%20exacta.%20Primera%20observaci%C3%B3n%20es%20una%20variable%20distinta.%22%2C%0A%20%20%20%20%22Activa%20exige%20ficha%20original%20y%20mecanismo%20de%20postulaci%C3%B3n%20vigente%20o%20confirmaci%C3%B3n%20directa%2C%20comprobados%20en%20esta%20captura.%20Un%20snippet%2C%20resultado%20indexado%2C%20ficha%20cacheada%20o%20etiqueta%20corporativa%20de%20contrataci%C3%B3n%20no%20confirma%20estado%20actual.%22%2C%0A%20%20%20%20%22Cerrar%20solo%20con%20evidencia%20expl%C3%ADcita%20de%20cierre%3B%20desaparici%C3%B3n%2C%20403%2C%20login%20o%20error%20se%20registran%20no_verificable.%20No%20inferir%20contrataci%C3%B3n%20efectiva.%22%2C%0A%20%20%20%20%22Deduplicaci%C3%B3n%20en%20plataforma%20por%20ID%20o%20URL%20can%C3%B3nica%3B%20entre%20plataformas%20solo%20por%20requisici%C3%B3n%20corporativa%20o%20equivalencia%20documentada.%20Si%20es%20sospecha%2C%20mantener%20separada%20y%20pendiente.%20No%20fusionar%20solo%20por%20empresa%20y%20t%C3%ADtulo.%22%2C%0A%20%20%20%20%22Nueva%20observaci%C3%B3n%20no%20equivale%20a%20nueva%20apertura.%20Republicaci%C3%B3n%20no%20equivale%20a%20demanda%20adicional.%20Conservar%20historial%20inmutable%2C%20consultas%2C%20evidencia%20y%20conteos%20reportados%20frente%20a%20extra%C3%ADdos.%22%2C%0A%20%20%20%20%22Captura%20completa%20requiere%20ejecutar%20todos%20los%20t%C3%A9rminos%20y%20revisar%20toda%20paginaci%C3%B3n%20accesible%3B%20documentar%20p%C3%A1ginas%2C%20filtros%20y%20barreras.%20Captura%20parcial%20o%20bloqueada%20nunca%20se%20rellena%20con%20cero.%22%2C%0A%20%20%20%20%22Cortes%3A%2025%20nov%E2%80%931%20dic%2C%202%E2%80%938%20dic%2C%209%E2%80%9315%20dic%20y%2016%E2%80%9320%20dic.%20El%20%C3%BAltimo%20corte%20tiene%20cinco%20d%C3%ADas.%20Promedio%20observado%20%3D%20nuevas%20publicaciones%20%C3%BAnicas%20documentadas%20/%20d%C3%ADas%20con%20cobertura%20v%C3%A1lida%2C%20mostrando%20denominador%3B%20sin%20cobertura%20equivalente%20no%20reportar%20promedio%20comparable.%22%2C%0A%20%20%20%20%22Hist%C3%B3rico%202025%20solo%20fuente%20p%C3%BAblica%20primaria%2C%20reporte%20de%20plataforma%20o%20registro%20propio%20verificable.%20Guardar%20periodo%2C%20pa%C3%ADs%2C%20familia%2C%20definici%C3%B3n%2C%20unidad%2C%20fuente%2C%20fecha%20de%20recuperaci%C3%B3n%20y%20cobertura.%20Un%20agregado%20semestral%20no%20es%20una%20serie%20diaria%20ni%20una%20base%20comparable%20por%20especialidad.%22%2C%0A%20%20%20%20%22No%20calcular%20p-valores%2C%20intervalos%2C%20IDLT%20ni%20causalidad%20sin%20observaciones%20y%20supuestos%20suficientes.%20Simulaci%C3%B3n%20aritm%C3%A9tica%20separada%20del%20registro%20observado.%20No%20reconstruir%20datos%20faltantes.%22%0A%20%20%5D%2C%0A%20%20%22record_fields%22%3A%5B%22platform%22%2C%22platform_id%22%2C%22company%22%2C%22title%22%2C%22family%22%2C%22seniority%22%2C%22seniority_basis%22%2C%22location%22%2C%22market%22%2C%22modality%22%2C%22technologies%22%2C%22url%22%2C%22first_published%22%2C%22publication_raw%22%2C%22publication_precision%22%2C%22status%22%2C%22evidence%22%2C%22evidence_url%22%2C%22source_cached_at%22%2C%22canonical_id%22%2C%22dedup_evidence%22%2C%22event%22%5D%2C%0A%20%20%22run_fields%22%3A%5B%22run_id%22%2C%22date%22%2C%22observed_at%22%2C%22methodology_version%22%2C%22coverage%22%2C%22records%22%5D%2C%0A%20%20%22coverage_fields%22%3A%5B%22platform%22%2C%22status%22%2C%22reason%22%2C%22queries%22%2C%22filters%22%2C%22pages_reviewed%22%2C%22reported_count%22%2C%22extracted_count%22%2C%22source_urls%22%5D%2C%0A%20%20%22status_values%22%3A%5B%22activa%22%2C%22cerrada%22%2C%22no_verificable%22%5D%2C%0A%20%20%22event_values%22%3A%5B%22primera_observacion%22%2C%22conocida%22%2C%22nueva_confirmada%22%2C%22republicacion_confirmada%22%2C%22posible_republicacion%22%5D%2C%0A%20%20%22historical_fields%22%3A%5B%22id%22%2C%22platform%22%2C%22period_start%22%2C%22period_end%22%2C%22geography%22%2C%22family%22%2C%22metric%22%2C%22unit%22%2C%22value%22%2C%22source_url%22%2C%22source_title%22%2C%22retrieved_at%22%2C%22methodology%22%2C%22comparability%22%2C%22limitation%22%5D%0A%7D%0A"
-                                        download="protocolo.json" target="_blank" rel="noopener">Contrato JSON</a><a
-                        class="btn"
-                        href="data:text/plain;charset=utf-8,%22%22%22Analytics%20shared%20by%20local%20Python%20and%20browser%20Pyodide.%20No%20inferred%20time%20series.%22%22%22%0Aimport%20json%0Afrom%20collections%20import%20Counter%0Afrom%20html%20import%20escape%0Afrom%20datetime%20import%20date%2C%20timedelta%0A%0APLATFORMS%20%3D%20%5B%27Indeed%27%2C%20%27OCC%27%2C%20%27Get%20on%20Board%27%2C%20%27Wellfound%27%2C%20%27LinkedIn%27%5D%0A%0Adef%20bar_svg%28items%2C%20title%29%3A%0A%20%20%20%20items%20%3D%20list%28items%29%0A%20%20%20%20h%20%3D%20max%28160%2C%20len%28items%29%20%2A%2048%20%2B%2025%29%0A%20%20%20%20top%20%3D%20max%28%5Bv%20for%20_%2C%20v%20in%20items%5D%20%2B%20%5B1%5D%29%0A%20%20%20%20rows%20%3D%20%5B%5D%0A%20%20%20%20for%20i%2C%20%28label%2C%20value%29%20in%20enumerate%28items%29%3A%0A%20%20%20%20%20%20%20%20y%20%3D%2012%20%2B%20i%20%2A%2048%0A%20%20%20%20%20%20%20%20rows.append%28f%27%3Ctext%20x%3D%220%22%20y%3D%22%7By%2B14%7D%22%20fill%3D%22%2353635f%22%20font-size%3D%2212%22%3E%7Bescape%28str%28label%29%29%7D%3C/text%3E%3Crect%20x%3D%22158%22%20y%3D%22%7By%7D%22%20width%3D%22%7Bmax%281%2Cvalue/top%2A250%29%7D%22%20height%3D%2223%22%20rx%3D%224%22%20fill%3D%22%23087f72%22/%3E%3Ctext%20x%3D%22425%22%20y%3D%22%7By%2B16%7D%22%20fill%3D%22%23173d36%22%20font-size%3D%2213%22%3E%7Bvalue%7D%3C/text%3E%27%29%0A%20%20%20%20return%20f%27%3Csvg%20viewBox%3D%220%200%20460%20%7Bh%7D%22%20role%3D%22img%22%20aria-label%3D%22%7Bescape%28title%29%7D%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%27%2B%27%27.join%28rows%29%2B%27%3C/svg%3E%27%0A%0Adef%20analyze%28payload%29%3A%0A%20%20%20%20p%20%3D%20json.loads%28payload%29%20if%20isinstance%28payload%2C%20str%29%20else%20payload%0A%20%20%20%20runs%20%3D%20sorted%28p%5B%27runs%27%5D%2C%20key%3Dlambda%20r%3Ar%5B%27observed_at%27%5D%29%0A%20%20%20%20f%20%3D%20p.get%28%27filters%27%2C%20%7B%7D%29%0A%20%20%20%20latest%2C%20first%20%3D%20%7B%7D%2C%20%7B%7D%0A%20%20%20%20for%20run%20in%20runs%3A%0A%20%20%20%20%20%20%20%20for%20r%20in%20run%5B%27records%27%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20key%20%3D%20%28r%5B%27platform%27%5D%2C%20r%5B%27platform_id%27%5D%29%0A%20%20%20%20%20%20%20%20%20%20%20%20first%5Bkey%5D%20%3D%20min%28first.get%28key%2C%20run%5B%27date%27%5D%29%2C%20run%5B%27date%27%5D%29%0A%20%20%20%20%20%20%20%20%20%20%20%20latest%5Bkey%5D%20%3D%20dict%28r%2C%20observed_at%3Drun%5B%27observed_at%27%5D%2C%20observation_date%3Drun%5B%27date%27%5D%2C%20first_observed%3Dfirst%5Bkey%5D%29%0A%20%20%20%20%23%20Latest%20observation%2C%20never%20carry%20a%20previous%20active%20status%20into%20an%20unobserved%20date.%0A%20%20%20%20rows%20%3D%20%5Br%20for%20r%20in%20latest.values%28%29%20if%20all%28not%20f.get%28k%29%20or%20r.get%28k%29%3D%3Dv%20for%20k%2Cv%20in%20f.items%28%29%20if%20k%20not%20in%20%5B%27from%27%2C%27to%27%5D%29%20and%20%28not%20f.get%28%27from%27%29%20or%20r%5B%27observation_date%27%5D%3E%3Df%5B%27from%27%5D%29%20and%20%28not%20f.get%28%27to%27%29%20or%20r%5B%27observation_date%27%5D%3C%3Df%5B%27to%27%5D%29%5D%0A%20%20%20%20selected_runs%20%3D%20%5Br%20for%20r%20in%20runs%20if%20%28not%20f.get%28%27from%27%29%20or%20r%5B%27date%27%5D%3E%3Df%5B%27from%27%5D%29%20and%20%28not%20f.get%28%27to%27%29%20or%20r%5B%27date%27%5D%3C%3Df%5B%27to%27%5D%29%5D%0A%20%20%20%20last_day%20%3D%20max%28%28r%5B%27date%27%5D%20for%20r%20in%20selected_runs%29%2Cdefault%3DNone%29%0A%20%20%20%20active%20%3D%20%5Br%20for%20r%20in%20rows%20if%20r%5B%27status%27%5D%3D%3D%27activa%27%20and%20r%5B%27observation_date%27%5D%3D%3Dlast_day%5D%0A%20%20%20%20groups%20%3D%20%7Br.get%28%27canonical_id%27%29%20or%20r%5B%27platform%27%5D%2B%27%3A%27%2Br%5B%27platform_id%27%5D%20for%20r%20in%20rows%7D%0A%20%20%20%20confirmed_active%20%3D%20%7Br.get%28%27canonical_id%27%29%20or%20r%5B%27platform%27%5D%2B%27%3A%27%2Br%5B%27platform_id%27%5D%20for%20r%20in%20active%7D%0A%20%20%20%20platforms%20%3D%20%5Bf%5B%27platform%27%5D%5D%20if%20f.get%28%27platform%27%29%20else%20PLATFORMS%0A%20%20%20%20coverage%20%3D%20%5B%5D%0A%20%20%20%20for%20plat%20in%20platforms%3A%0A%20%20%20%20%20%20%20%20matches%20%3D%20%5Bdict%28c%2C%20date%3Dr%5B%27date%27%5D%2Cobserved_at%3Dr%5B%27observed_at%27%5D%29%20for%20r%20in%20selected_runs%20for%20c%20in%20r%5B%27coverage%27%5D%20if%20c%5B%27platform%27%5D%3D%3Dplat%5D%0A%20%20%20%20%20%20%20%20coverage.append%28matches%5B-1%5D%20if%20matches%20else%20%7B%27platform%27%3Aplat%2C%27status%27%3A%27pendiente%27%2C%27date%27%3ANone%2C%27reason%27%3A%27Sin%20captura%20en%20el%20rango%27%7D%29%0A%20%20%20%20complete%20%3D%20sum%28c%5B%27status%27%5D%3D%3D%27completa%27%20for%20c%20in%20coverage%29%0A%20%20%20%20%23%20A%20publication%20date%20must%20have%20primary-source%20evidence%3B%20first%20observation%20alone%20is%20insufficient.%0A%20%20%20%20new_records%20%3D%20%7Br.get%28%27canonical_id%27%29%20or%20r%5B%27platform%27%5D%2B%27%3A%27%2Br%5B%27platform_id%27%5D%20for%20run%20in%20selected_runs%20for%20r%20in%20run%5B%27records%27%5D%20if%20r.get%28%27first_published%27%29%20and%20r.get%28%27publication_precision%27%29%3D%3D%27exacta%27%20and%20%272026-11-25%27%3C%3Dr%5B%27first_published%27%5D%3C%3Drun%5B%27date%27%5D%20and%20r%5B%27event%27%5D%3D%3D%27nueva_confirmada%27%20and%20%28not%20f.get%28%27platform%27%29%20or%20r%5B%27platform%27%5D%3D%3Df%5B%27platform%27%5D%29%20and%20%28not%20f.get%28%27family%27%29%20or%20r%5B%27family%27%5D%3D%3Df%5B%27family%27%5D%29%20and%20%28not%20f.get%28%27market%27%29%20or%20r%5B%27market%27%5D%3D%3Df%5B%27market%27%5D%29%20and%20%28not%20f.get%28%27seniority%27%29%20or%20r%5B%27seniority%27%5D%3D%3Df%5B%27seniority%27%5D%29%20and%20%28not%20f.get%28%27modality%27%29%20or%20r%5B%27modality%27%5D%3D%3Df%5B%27modality%27%5D%29%20and%20%28not%20f.get%28%27status%27%29%20or%20r%5B%27status%27%5D%3D%3Df%5B%27status%27%5D%29%20and%20%28not%20f.get%28%27from%27%29%20or%20r%5B%27first_published%27%5D%3E%3Df%5B%27from%27%5D%29%20and%20%28not%20f.get%28%27to%27%29%20or%20r%5B%27first_published%27%5D%3C%3Df%5B%27to%27%5D%29%7D%0A%20%20%20%20weekly%20%3D%20%5B%5D%0A%20%20%20%20start%20%3D%20date%282026%2C11%2C25%29%0A%20%20%20%20for%20i%20in%20range%284%29%3A%0A%20%20%20%20%20%20%20%20a%20%3D%20start%20%2B%20timedelta%28days%3D7%2Ai%29%3B%20b%20%3D%20min%28a%2Btimedelta%28days%3D6%29%2Cdate%282026%2C12%2C20%29%29%0A%20%20%20%20%20%20%20%20rr%20%3D%20%5Br%20for%20r%20in%20selected_runs%20if%20a.isoformat%28%29%3C%3Dr%5B%27date%27%5D%3C%3Db.isoformat%28%29%5D%0A%20%20%20%20%20%20%20%20days%20%3D%20%7Br%5B%27date%27%5D%20for%20r%20in%20rr%20if%20all%28any%28c%5B%27platform%27%5D%3D%3Dplat%20and%20c%5B%27status%27%5D%3D%3D%27completa%27%20for%20c%20in%20r%5B%27coverage%27%5D%29%20for%20plat%20in%20platforms%29%7D%0A%20%20%20%20%20%20%20%20evidence%20%3D%20%7Br.get%28%27canonical_id%27%29%20or%20r%5B%27platform%27%5D%2B%27%3A%27%2Br%5B%27platform_id%27%5D%20for%20run%20in%20rr%20for%20r%20in%20run%5B%27records%27%5D%20if%20r%5B%27event%27%5D%3D%3D%27nueva_confirmada%27%20and%20r.get%28%27first_published%27%29%20and%20r%5B%27publication_precision%27%5D%3D%3D%27exacta%27%20and%20a.isoformat%28%29%3C%3Dr%5B%27first_published%27%5D%3C%3Db.isoformat%28%29%20and%20all%28not%20f.get%28k%29%20or%20r.get%28k%29%3D%3Dv%20for%20k%2Cv%20in%20f.items%28%29%20if%20k%20not%20in%20%5B%27from%27%2C%27to%27%5D%29%7D%0A%20%20%20%20%20%20%20%20as_of%20%3D%20min%28date.fromisoformat%28p.get%28%27as_of%27%2Cdate.today%28%29.isoformat%28%29%29%29%2Cdate.fromisoformat%28f.get%28%27to%27%29%20or%20%272026-12-20%27%29%29%0A%20%20%20%20%20%20%20%20elapsed%20%3D%20max%280%2Cmin%28%28as_of-a%29.days%2B1%2C%28b-a%29.days%2B1%29%29%0A%20%20%20%20%20%20%20%20unknown_new%20%3D%20any%28r%5B%27event%27%5D%3D%3D%27primera_observacion%27%20and%20not%20r.get%28%27first_published%27%29%20for%20run%20in%20rr%20for%20r%20in%20run%5B%27records%27%5D%20if%20not%20f.get%28%27platform%27%29%20or%20r%5B%27platform%27%5D%3D%3Df%5B%27platform%27%5D%29%0A%20%20%20%20%20%20%20%20daily%20%3D%20len%28evidence%29/len%28days%29%20if%20days%20and%20len%28days%29%3D%3Delapsed%20and%20not%20unknown_new%20else%20None%0A%20%20%20%20%20%20%20%20weekly.append%28%7B%27start%27%3Aa.isoformat%28%29%2C%27end%27%3Ab.isoformat%28%29%2C%27captures%27%3Alen%28rr%29%2C%27valid_days%27%3Alen%28days%29%2C%27elapsed_days%27%3Aelapsed%2C%27new%27%3Alen%28evidence%29%20if%20days%20else%20None%2C%27daily_mean%27%3Adaily%7D%29%0A%20%20%20%20series%20%3D%20Counter%28r%5B%27observation_date%27%5D%20for%20r%20in%20rows%29%0A%20%20%20%20return%20%7B%27rows%27%3Arows%2C%27coverage%27%3Acoverage%2C%27weekly%27%3Aweekly%2C%27metrics%27%3A%7B%27observed%27%3Alen%28rows%29%2C%27groups%27%3Alen%28groups%29%2C%27active%27%3Alen%28confirmed_active%29%20if%20any%28r%5B%27observation_date%27%5D%3D%3Dlast_day%20and%20r%5B%27status%27%5D%20in%20%5B%27activa%27%2C%27cerrada%27%5D%20for%20r%20in%20rows%29%20else%20None%2C%27new%27%3Alen%28new_records%29%20if%20complete%3D%3Dlen%28platforms%29%20and%20not%20any%28r%5B%27event%27%5D%3D%3D%27primera_observacion%27%20and%20not%20r.get%28%27first_published%27%29%20for%20r%20in%20rows%29%20else%20None%2C%27coverage_complete%27%3Acomplete%2C%27coverage_total%27%3Alen%28platforms%29%2C%27last_day%27%3Alast_day%2C%27reposts%27%3Asum%28r%5B%27event%27%5D%3D%3D%27republicacion_confirmada%27%20for%20r%20in%20rows%29%2C%27dedup_pending%27%3Asum%28not%20r.get%28%27canonical_id%27%29%20for%20r%20in%20rows%29%7D%2C%27charts%27%3A%7B%27platform%27%3Abar_svg%28%5B%28x%2Csum%28r%5B%27platform%27%5D%3D%3Dx%20for%20r%20in%20rows%29%29%20for%20x%20in%20platforms%5D%2C%27Anuncios%20observados%20por%20plataforma%27%29%2C%27family%27%3Abar_svg%28Counter%28r%5B%27family%27%5D%20for%20r%20in%20rows%29.most_common%28%29%2C%27Composici%C3%B3n%20por%20especialidad%27%29%2C%27series%27%3Abar_svg%28sorted%28series.items%28%29%29%2C%27%C3%9Altima%20observaci%C3%B3n%20por%20fecha%27%29%7D%7D%0A"
-                        download="analytics.py" target="_blank" rel="noopener">Análisis Python</a>
+                <div class="actions"><a class="btn" href="/api/protocol" download="protocolo.json">Contrato JSON</a>
                     <button class="btn" id="rawexport">Exportar historial completo</button>
                 </div>
             </article>
@@ -354,6 +318,5 @@
     </div>
     <dl id="detailbody"></dl>
 </dialog>
-<script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
 </body>
 </html>

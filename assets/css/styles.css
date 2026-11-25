@@ -730,3 +730,37 @@
             gap: 5px
         }
     }
+
+.history-grid {
+    margin-top: 20px;
+}
+
+.chart svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.chart .empty {
+    padding: 24px 12px;
+}
+
+.sim-source {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: end;
+    margin-top: 15px;
+}
+
+.sim-source select {
+    display: block;
+}
+
+.sim-source .caption {
+    flex-basis: 100%;
+}
+
+.history-summary {
+    margin-top: 12px;
+}
