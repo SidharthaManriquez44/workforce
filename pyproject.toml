@@ -5,15 +5,28 @@ description = "Analysis of the technology labor market in mexico 2025–2026"
 requires-python = ">=3.10"
 
 dependencies = [
+    "fastapi>=0.115,<1",
+    "psycopg[binary]>=3.2,<4",
+    "uvicorn>=0.34,<1",
 ]
 
 [project.optional-dependencies]
 test = [
-
+    "fastapi>=0.115,<1",
+    "psycopg[binary]>=3.2,<4",
+    "uvicorn>=0.34,<1",
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+    "tomli>=2.5.0",
+    "sqlfluff-4.5.0",
+    "mypy-2.4.1",
+    "ruff-0.17.6",
 ]
 
 dev = [
-
+    "sqlfluff-4.5.0",
+    "mypy-2.4.1",
+    "ruff-0.17.6",
 ]
 
 [tool.sqlfluff.core]
@@ -21,7 +34,7 @@ dialect = "postgres"
 large_file_skip_byte_limit = 100000
 
 [tool.sqlfluff.rules.references.keywords]
-ignore_words = "name,content,location,configuration"
+ignore_words = "name,content,location,configuration,audit,family,value"
 
 [tool.ruff]
 line-length = 88
@@ -44,7 +57,6 @@ indent-style = "space"
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
-asyncio_mode = "auto"
 markers = []
 
 [tool.mypy]
@@ -57,3 +69,11 @@ pretty = true
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["workforce*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+workforce = ["files/*.json"]
