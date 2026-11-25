@@ -51,3 +51,6 @@ data/
 
 # PyCharm support libs
 *-pycharm-support-libs/
+
+!src/workforce/files/protocol.json
+!src/workforce/files/initial_data.json
