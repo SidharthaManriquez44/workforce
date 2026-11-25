@@ -1,0 +1,59 @@
+[project]
+name = "workforce"
+version = "0.1.0"
+description = "Analysis of the technology labor market in mexico 2025–2026"
+requires-python = ">=3.10"
+
+dependencies = [
+]
+
+[project.optional-dependencies]
+test = [
+
+]
+
+dev = [
+
+]
+
+[tool.sqlfluff.core]
+dialect = "postgres"
+large_file_skip_byte_limit = 100000
+
+[tool.sqlfluff.rules.references.keywords]
+ignore_words = "name,content,location,configuration"
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "W",
+    "I",
+    "UP",
+    "B",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = []
+
+[tool.mypy]
+strict = true
+warn_unused_ignores = true
+disallow_any_generics = true
+show_error_codes = true
+pretty = true
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
