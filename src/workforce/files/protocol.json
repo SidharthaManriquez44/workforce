@@ -1,0 +1,175 @@
+{
+  "version": "1.0.0",
+  "window": {
+    "start": "2026-11-25",
+    "end": "2026-12-20",
+    "timezone": "America/Mexico_City"
+  },
+  "platforms": [
+    "Indeed",
+    "OCC",
+    "Get on Board",
+    "Wellfound",
+    "LinkedIn"
+  ],
+  "families": {
+    "Ingeniería de Datos": [
+      "Data Engineer",
+      "Senior Data Engineer",
+      "Ingeniero de Datos",
+      "Data Platform Engineer",
+      "Ingeniero de Plataforma de Datos"
+    ],
+    "Arquitectura de Datos": [
+      "Data Architect",
+      "Arquitecto de Datos",
+      "Lakehouse Architect"
+    ],
+    "Analytics Engineering": [
+      "Analytics Engineer",
+      "Ingeniero de Analítica"
+    ],
+    "BI y Analítica": [
+      "Senior Data Analyst",
+      "Analista de Datos Senior",
+      "Business Intelligence",
+      "BI Lead",
+      "BI Developer",
+      "Advanced Analytics",
+      "Analítica Avanzada",
+      "Business Analytics"
+    ],
+    "Estrategia y Liderazgo": [
+      "Analytics Manager",
+      "Data & Analytics Manager",
+      "Data Strategy Consultant",
+      "Data Consultant",
+      "Gerente de Analítica",
+      "Consultor de Datos"
+    ]
+  },
+  "rules": [
+    "Mismos términos y filtros lógicos en las cinco plataformas; documentar toda limitación de filtros o paginación. Conservar todas las consultas, incluidas las que no produzcan registros.",
+    "Sin filtro de seniority: capturar todos los niveles y guardar el nivel publicado; si se deriva de experiencia y responsabilidades, marcarlo como inferido con justificación. No confundir título senior con clasificación de la plataforma.",
+    "Mercado México: puesto localizado explícitamente en México. Internacional elegible: empresa exterior y admisión explícita de residentes en México. LATAM genérico sin elegibilidad explícita queda pendiente y fuera del inventario elegible.",
+    "Consulta inicial: inventario visible de cualquier antigüedad. En consultas posteriores: buscar últimos 7 días cuando el filtro exista, cubrir días transcurridos desde el último corte válido y revalidar todas las fichas previas. No restringir la revalidación por antigüedad.",
+    "Fecha de publicación original solo cuando esté documentada; conservar texto relativo y precisión sin convertirlo en fecha exacta. Primera observación es una variable distinta.",
+    "Activa exige ficha original y mecanismo de postulación vigente o confirmación directa, comprobados en esta captura. Un snippet, resultado indexado, ficha cacheada o etiqueta corporativa de contratación no confirma estado actual.",
+    "Cerrar solo con evidencia explícita de cierre; desaparición, 403, login o error se registran no_verificable. No inferir contratación efectiva.",
+    "Deduplicación en plataforma por ID o URL canónica; entre plataformas solo por requisición corporativa o equivalencia documentada. Si es sospecha, mantener separada y pendiente. No fusionar solo por empresa y título.",
+    "Nueva observación no equivale a nueva apertura. Republicación no equivale a demanda adicional. Conservar historial inmutable, consultas, evidencia y conteos reportados frente a extraídos.",
+    "Captura completa requiere ejecutar todos los términos y revisar toda paginación accesible; documentar páginas, filtros y barreras. Captura parcial o bloqueada nunca se rellena con cero.",
+    "Cortes: 25 nov–1 dic, 2–8 dic, 9–15 dic y 16–20 dic. El último corte tiene cinco días. Promedio observado = nuevas publicaciones únicas documentadas / días con cobertura válida, mostrando denominador; sin cobertura equivalente no reportar promedio comparable.",
+    "Histórico 2025 solo fuente pública primaria, reporte de plataforma o registro propio verificable. Guardar periodo, país, familia, definición, unidad, fuente, fecha de recuperación y cobertura. Un agregado semestral no es una serie diaria ni una base comparable por especialidad.",
+    "No calcular p-valores, intervalos, IDLT ni causalidad sin observaciones y supuestos suficientes. Simulación aritmética separada del registro observado. No reconstruir datos faltantes."
+  ],
+  "record_fields": [
+    "platform",
+    "platform_id",
+    "company",
+    "title",
+    "family",
+    "seniority",
+    "seniority_basis",
+    "location",
+    "market",
+    "modality",
+    "technologies",
+    "url",
+    "first_published",
+    "publication_raw",
+    "publication_precision",
+    "status",
+    "evidence",
+    "evidence_url",
+    "source_cached_at",
+    "canonical_id",
+    "dedup_evidence",
+    "event",
+    "application_url",
+    "publication_evidence",
+    "repost_evidence"
+  ],
+  "run_fields": [
+    "run_id",
+    "date",
+    "observed_at",
+    "methodology_version",
+    "coverage",
+    "records"
+  ],
+  "coverage_fields": [
+    "platform",
+    "status",
+    "reason",
+    "queries",
+    "filters",
+    "pages_reviewed",
+    "reported_count",
+    "extracted_count",
+    "source_urls"
+  ],
+  "status_values": [
+    "activa",
+    "cerrada",
+    "no_verificable"
+  ],
+  "event_values": [
+    "primera_observacion",
+    "conocida",
+    "nueva_confirmada",
+    "republicacion_confirmada",
+    "posible_republicacion"
+  ],
+  "historical_fields": [
+    "id",
+    "platform",
+    "period_start",
+    "period_end",
+    "geography",
+    "family",
+    "metric",
+    "unit",
+    "value",
+    "source_url",
+    "source_title",
+    "retrieved_at",
+    "methodology",
+    "comparability",
+    "limitation",
+    "source_type",
+    "coverage",
+    "methodology_version",
+    "valid_days"
+  ],
+  "markets": [
+    "México",
+    "Internacional elegible",
+    "Elegibilidad pendiente"
+  ],
+  "historical_source_types": [
+    "fuente_publica_primaria",
+    "reporte_plataforma",
+    "registro_propio_verificable"
+  ],
+  "comparison_metric": "nuevas_publicaciones_originales",
+  "comparison_unit": "publicaciones",
+  "cuts": [
+    [
+      "2026-11-25",
+      "2026-12-01"
+    ],
+    [
+      "2026-12-02",
+      "2026-12-08"
+    ],
+    [
+      "2026-12-09",
+      "2026-12-15"
+    ],
+    [
+      "2026-12-16",
+      "2026-12-20"
+    ]
+  ]
+}

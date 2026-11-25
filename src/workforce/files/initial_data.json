@@ -1,0 +1,253 @@
+{
+  "runs": [
+    {
+      "run_id": "2026-11-25-acceso-inicial",
+      "date": "2026-11-25",
+      "observed_at": "2026-11-25T17:26:35.047529+00:00",
+      "methodology_version": "1.0.0",
+      "coverage": [
+        {
+          "platform": "Indeed",
+          "status": "parcial",
+          "reason": "Muestra de ficha almacenada; universo sin paginar",
+          "queries": [
+            "Data Engineer / Ingeniero de Datos; prueba inicial de acceso"
+          ],
+          "filters": {
+            "geography": "México o elegibilidad explícita",
+            "seniority": "Todos",
+            "date_filter": "Sin filtro; prueba inicial de acceso"
+          },
+          "pages_reviewed": [
+            "Listado o ficha de muestra"
+          ],
+          "reported_count": null,
+          "extracted_count": 1,
+          "source_urls": [
+            "https://mx.indeed.com/viewjob?jk=509e2c87d9fc71de"
+          ]
+        },
+        {
+          "platform": "OCC",
+          "status": "bloqueada",
+          "reason": "Consulta directa bloqueada: HTTP 403",
+          "queries": [
+            "Data Engineer / Ingeniero de Datos; prueba inicial de acceso"
+          ],
+          "filters": {
+            "geography": "México o elegibilidad explícita",
+            "seniority": "Todos",
+            "date_filter": "Sin filtro; prueba inicial de acceso"
+          },
+          "pages_reviewed": [],
+          "reported_count": null,
+          "extracted_count": 0,
+          "source_urls": [
+            "https://www.occ.com.mx/empleos/de-ingeniero-de-datos/"
+          ]
+        },
+        {
+          "platform": "Get on Board",
+          "status": "parcial",
+          "reason": "Listado recuperado; ficha 403; sin cobertura de todo el protocolo",
+          "queries": [
+            "Data Engineer / Ingeniero de Datos; prueba inicial de acceso"
+          ],
+          "filters": {
+            "geography": "México o elegibilidad explícita",
+            "seniority": "Todos",
+            "date_filter": "Sin filtro; prueba inicial de acceso"
+          },
+          "pages_reviewed": [
+            "Listado o ficha de muestra"
+          ],
+          "reported_count": null,
+          "extracted_count": 1,
+          "source_urls": [
+            "https://www.getonbrd.com.mx/empleos-data-platforms"
+          ]
+        },
+        {
+          "platform": "Wellfound",
+          "status": "parcial",
+          "reason": "Muestra de ficha almacenada; sin paginar",
+          "queries": [
+            "Data Engineer / Ingeniero de Datos; prueba inicial de acceso"
+          ],
+          "filters": {
+            "geography": "México o elegibilidad explícita",
+            "seniority": "Todos",
+            "date_filter": "Sin filtro; prueba inicial de acceso"
+          },
+          "pages_reviewed": [
+            "Listado o ficha de muestra"
+          ],
+          "reported_count": null,
+          "extracted_count": 1,
+          "source_urls": [
+            "https://wellfound.com/location/mexico"
+          ]
+        },
+        {
+          "platform": "LinkedIn",
+          "status": "parcial",
+          "reason": "Resultado indexado; ficha bloqueada (DisabledError)",
+          "queries": [
+            "Data Engineer / Ingeniero de Datos; prueba inicial de acceso"
+          ],
+          "filters": {
+            "geography": "México o elegibilidad explícita",
+            "seniority": "Todos",
+            "date_filter": "Sin filtro; prueba inicial de acceso"
+          },
+          "pages_reviewed": [
+            "Listado o ficha de muestra"
+          ],
+          "reported_count": null,
+          "extracted_count": 1,
+          "source_urls": [
+            "https://mx.linkedin.com/jobs/ingeniero-de-datos-empleos"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "seniority": "No informado",
+          "seniority_basis": "No informado por la fuente recuperada",
+          "first_published": null,
+          "publication_raw": "No expuesta en la ficha recuperada",
+          "publication_precision": "desconocida",
+          "status": "no_verificable",
+          "canonical_id": null,
+          "dedup_evidence": null,
+          "event": "primera_observacion",
+          "source_cached_at": "Rastreo reportado: hace 2 días",
+          "platform": "Indeed",
+          "platform_id": "509e2c87d9fc71de",
+          "company": "OODOO",
+          "title": "Data Engineer (Azure / Databricks)",
+          "family": "Ingeniería de Datos",
+          "location": "Ciudad de México, CDMX",
+          "market": "México",
+          "modality": "Remoto",
+          "technologies": [
+            "Azure",
+            "Databricks",
+            "Python",
+            "SQL",
+            "PySpark"
+          ],
+          "url": "https://mx.indeed.com/viewjob?jk=509e2c87d9fc71de",
+          "evidence_url": "https://mx.indeed.com/viewjob?jk=509e2c87d9fc71de",
+          "evidence": "Ficha recuperada con descripción y enlace de postulación. El servicio indica rastreo hace 2 días; no se verificó disponibilidad en tiempo real. Se conserva como indicio por revalidar."
+        },
+        {
+          "seniority": "No informado",
+          "seniority_basis": "No informado por la fuente recuperada",
+          "first_published": null,
+          "publication_raw": "Hace 11 horas (resultado de búsqueda)",
+          "publication_precision": "relativa",
+          "status": "no_verificable",
+          "canonical_id": null,
+          "dedup_evidence": null,
+          "event": "primera_observacion",
+          "source_cached_at": "Índice de búsqueda: rastreo reportado hoy",
+          "platform": "LinkedIn",
+          "platform_id": "4494389439",
+          "company": "Capgemini",
+          "title": "Data Engineer",
+          "family": "Ingeniería de Datos",
+          "location": "CDMX o Estado de México",
+          "market": "México",
+          "modality": "Híbrido",
+          "technologies": [
+            "GCP",
+            "PostgreSQL",
+            "AlloyDB",
+            "SQL",
+            "Cloud Data Fusion"
+          ],
+          "url": "https://mx.linkedin.com/jobs/view/data-engineer-at-capgemini-4494389439",
+          "evidence_url": "https://mx.linkedin.com/jobs/view/data-engineer-at-capgemini-4494389439",
+          "evidence": "Resultado indexado recuperado. La apertura de la ficha fue bloqueada por el servicio (DisabledError). El resultado indexado no confirma la vigencia."
+        },
+        {
+          "seniority": "No informado",
+          "seniority_basis": "No informado por la fuente recuperada",
+          "first_published": null,
+          "publication_raw": "nov 11 (año no mostrado en el listado recuperado)",
+          "publication_precision": "desconocida",
+          "status": "no_verificable",
+          "canonical_id": null,
+          "dedup_evidence": null,
+          "event": "primera_observacion",
+          "source_cached_at": "Listado: rastreo reportado hace 6 días",
+          "platform": "Get on Board",
+          "platform_id": "data-engineer-rankmi-ciudad-de-mexico-santiago-lima",
+          "company": "Rankmi",
+          "title": "Data Engineer",
+          "family": "Ingeniería de Datos",
+          "location": "Ciudad de México / Santiago / Lima",
+          "market": "México",
+          "modality": "Híbrido",
+          "technologies": [],
+          "url": "https://www.getonbrd.com/jobs/data-science-analytics/data-engineer-rankmi-ciudad-de-mexico-santiago-lima",
+          "evidence_url": "https://www.getonbrd.com.mx/empleos-data-platforms",
+          "evidence": "Listado público recuperado; la ficha individual respondió 403. No se comprobó postulación vigente ni primera fecha original. La posición puede existir antes del inicio del panel."
+        },
+        {
+          "seniority": "Manager",
+          "seniority_basis": "Explícito en el título; no se verificó nivel estandarizado",
+          "first_published": null,
+          "publication_raw": "Posted: 3 days ago (ficha almacenada)",
+          "publication_precision": "relativa",
+          "status": "no_verificable",
+          "canonical_id": null,
+          "dedup_evidence": null,
+          "event": "primera_observacion",
+          "source_cached_at": "Rastreo reportado: hace 5 días",
+          "platform": "Wellfound",
+          "platform_id": "5086265",
+          "company": "LawnStarter",
+          "title": "Analytics Engineering Manager, Data Platform & Governance",
+          "family": "Estrategia y Liderazgo",
+          "location": "Bogotá / Mexico City; remoto México elegible",
+          "market": "Internacional elegible",
+          "modality": "Remoto",
+          "technologies": [
+            "Redshift",
+            "dbt",
+            "Airflow",
+            "Segment",
+            "Lightdash"
+          ],
+          "url": "https://wellfound.com/jobs/5086265-analytics-engineering-manager-data-platform-governance",
+          "evidence_url": "https://wellfound.com/jobs/5086265-analytics-engineering-manager-data-platform-governance",
+          "evidence": "Ficha almacenada con botón de postulación y México entre países elegibles. El rastreo reporta 5 días de antigüedad y la fecha relativa difiere del listado. Requiere revalidación actual."
+        }
+      ]
+    }
+  ],
+  "historical": [
+    {
+      "id": "occ-panorama-nacional-2025-total",
+      "platform": "OCC",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "geography": "México",
+      "family": "Todas las áreas",
+      "metric": "Ofertas de empleo registradas en OCC",
+      "unit": "ofertas",
+      "value": 482165,
+      "source_url": "https://prensa.occ.com.mx/prensa/el-mercado-laboral-mexicano-cerro-2025-con-mas-de-482-mil-vacantes-formales",
+      "source_title": "OCC · Panorama laboral nacional 2025",
+      "source_type": "reporte_plataforma",
+      "retrieved_at": "2026-11-25",
+      "methodology": "Total nacional anual de ofertas registradas por OCC, publicado el 15 de enero de 2026.",
+      "coverage": "Año calendario 2025, México, total reportado por OCC para todas las áreas.",
+      "comparability": "contexto",
+      "limitation": "El reporte no aporta una serie diaria de publicaciones originales por especialidad ni el corte equivalente de noviembre y diciembre."
+    }
+  ],
+  "reviews": []
+}
