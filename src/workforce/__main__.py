@@ -10,7 +10,7 @@ from datetime import datetime
 from hashlib import sha256
 from pathlib import Path
 
-from .contracts import (
+from src.workforce.contracts import (
     PROTOCOL,
     TZ,
     Invalid,
@@ -19,7 +19,7 @@ from .contracts import (
     validate_historical,
     validate_run,
 )
-from .storage.files import write_json
+from src.workforce.storage.files import write_json
 
 
 def stage(args):
