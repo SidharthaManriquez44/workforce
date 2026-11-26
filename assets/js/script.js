@@ -1,4 +1,10 @@
 let analysis = null, requestId = 0;
+const page = window.location;
+const staticPreview = page.protocol === 'file:' || (
+    ['localhost', '127.0.0.1', '[::1]'].includes(page.hostname)
+    && page.pathname.endsWith('/index.html')
+    && (page.port === '63342' || new URLSearchParams(page.search).has('_ijt'))
+);
 const $ = id => document.getElementById(id), esc = s => String(s ?? 'N/D').replace(/[&<>"']/g, c => ({
     '&': '&amp;',
     '<': '&lt;',
@@ -39,6 +45,9 @@ function filters() {
 
 async function get(path) {
     const r = await fetch(path);
+    if (!r.headers.get('content-type')?.startsWith('application/json')) {
+        throw Error('La API de Workforce no respondió con datos (HTTP ' + r.status + ').');
+    }
     const data = await r.json();
     if (!r.ok) throw Error(data.error || 'No se pudo leer el panel.');
     return data;
@@ -218,6 +227,7 @@ async function refresh() {
         $('loading').classList.remove('error');
     } catch (error) {
         if (current !== requestId) return;
+        if (!analysis) $('lastupdate').textContent = 'Sin conexión con la API';
         $('loading').textContent = 'No se pudo actualizar. ' + error.message;
         $('loading').classList.add('error');
     } finally {
@@ -312,11 +322,7 @@ $('useMean').onclick = () => {
     sim();
 };
 
-refresh();
-setInterval(() => {
-    if (!document.hidden && !$('refresh').disabled) refresh();
-}, 60000);
-(async () => {
+async function loadProtocol() {
     try {
         const protocol = await get('/api/protocol');
         $('queries').innerHTML = Object.entries(protocol.families).map(([k, v]) =>
@@ -325,4 +331,25 @@ setInterval(() => {
     } catch (error) {
         $('queries').textContent = error.message;
     }
-})();
+}
+
+if (staticPreview) {
+    const link = document.createElement('a');
+    link.href = 'http://127.0.0.1:8000/';
+    link.textContent = 'abra el panel de Workforce';
+    $('lastupdate').textContent = 'Vista previa estática';
+    $('loading').replaceChildren(
+        'La vista previa no tiene acceso a PostgreSQL. Inicie Docker Compose y ',
+        link,
+        ' en el puerto configurado en WORKFORCE_PORT (8000 por defecto).'
+    );
+    ['refresh', 'export', 'importRun', 'importHist', 'rawexport'].forEach(id => {
+        $(id).disabled = true;
+    });
+} else {
+    refresh();
+    loadProtocol();
+    setInterval(() => {
+        if (!document.hidden && !$('refresh').disabled) refresh();
+    }, 60000);
+}
