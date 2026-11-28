@@ -147,6 +147,21 @@ def validate_run(run):
             and coverage["extracted_count"] == counts[platform],
             f"{platform}: extracted_count no coincide con las observaciones.",
         )
+        if "search_results" in coverage:
+            validate_search_results(coverage, identities)
+        if "category_inventory" in coverage:
+            validate_category_inventory(coverage)
+        if "carried_forward_from" in coverage:
+            previous = coverage["carried_forward_from"]
+            require(
+                nonempty(previous)
+                and IDENTIFIER.fullmatch(previous)
+                and previous != run["run_id"]
+                and coverage["status"] in ("parcial", "bloqueada", "pendiente")
+                and coverage["extracted_count"] == 0,
+                f"{platform}: una referencia de cobertura requiere otra captura "
+                "y no admite medición completa ni observaciones nuevas.",
+            )
         if coverage["status"] == "completa":
             require(
                 TERMS <= set(coverage["queries"])
@@ -161,6 +176,81 @@ def validate_run(run):
             )
     require(seen == set(PLATFORMS), "Registre una cobertura por cada plataforma.")
     return run
+
+
+def validate_category_inventory(coverage):
+    platform = coverage["platform"]
+    inventory = coverage["category_inventory"]
+    fields(
+        inventory,
+        ("name", "date_window", "source_url", "results"),
+        f"{platform}: inventario de categoría",
+    )
+    results, reported = inventory["results"], coverage["reported_count"]
+    require(
+        coverage["status"] == "parcial"
+        and coverage["extracted_count"] == 0
+        and not coverage.get("carried_forward_from")
+        and nonempty(inventory["name"])
+        and nonempty(inventory["date_window"])
+        and url(inventory["source_url"])
+        and isinstance(results, list)
+        and (reported is None or len(results) <= reported),
+        f"{platform}: inventario de categoría inválido.",
+    )
+    identifiers = set()
+    for result in results:
+        fields(
+            result,
+            ("platform_id", "url", "publication_raw", "page"),
+            f"{platform}: ficha de categoría",
+        )
+        identifier = result["platform_id"]
+        require(
+            nonempty(identifier)
+            and identifier not in identifiers
+            and url(result["url"])
+            and nonempty(result["publication_raw"])
+            and count(result["page"])
+            and result["page"] > 0,
+            f"{platform}: ficha inválida o ID repetido en el inventario de categoría.",
+        )
+        identifiers.add(identifier)
+
+
+def validate_search_results(coverage, identities):
+    platform = coverage["platform"]
+    results = coverage["search_results"]
+    require(isinstance(results, list), f"{platform}: listado de búsqueda inválido.")
+    reported = coverage["reported_count"]
+    require(
+        reported is None or len(results) <= reported,
+        f"{platform}: se recuperaron más fichas que las reportadas.",
+    )
+    identifiers, included = set(), set()
+    for result in results:
+        fields(
+            result,
+            ("platform_id", "title", "url", "in_scope", "scope_reason"),
+            f"{platform}: resultado de búsqueda",
+        )
+        identifier = result["platform_id"]
+        require(
+            nonempty(identifier)
+            and identifier not in identifiers
+            and nonempty(result["title"])
+            and url(result["url"])
+            and type(result["in_scope"]) is bool
+            and nonempty(result["scope_reason"]),
+            f"{platform}: resultado inválido o ID repetido en el listado de búsqueda.",
+        )
+        identifiers.add(identifier)
+        if result["in_scope"]:
+            included.add((platform, identifier))
+    require(
+        included == {key for key in identities if key[0] == platform},
+        f"{platform}: los IDs incluidos no coinciden con las fichas registradas.",
+    )
 
 
 def validate_record(record, captured):

@@ -47,6 +47,7 @@ def analyze(state, filters=None, as_of=None):
     daily_records = defaultdict(dict)
     daily_coverage = defaultdict(dict)
     first, canonical, latest_coverage = {}, {}, {}
+    category_inventories = {}
     selected_runs = []
     for run in runs:
         captured = run["date"]
@@ -65,11 +66,22 @@ def analyze(state, filters=None, as_of=None):
                     first_observed=first[key],
                 )
         if start <= captured <= end:
-            selected_runs.append(run)
+            measured = False
             for coverage in run["coverage"]:
+                platform = coverage["platform"]
+                if platform not in selected_platforms or coverage.get(
+                    "carried_forward_from"
+                ):
+                    continue
                 item = dict(coverage, date=captured, observed_at=run["observed_at"])
-                daily_coverage[captured][coverage["platform"]] = item
-                latest_coverage[coverage["platform"]] = item
+                if "category_inventory" in coverage:
+                    category_inventories[platform] = item
+                    continue
+                measured = True
+                daily_coverage[captured][platform] = item
+                latest_coverage[platform] = item
+            if measured:
+                selected_runs.append(run)
 
     for records in daily_records.values():
         for key, record in records.items():
@@ -219,6 +231,7 @@ def analyze(state, filters=None, as_of=None):
     return {
         "rows": rows,
         "coverage": coverage,
+        "category_inventories": list(category_inventories.values()),
         "series": series,
         "weekly": weekly,
         "distribution": {

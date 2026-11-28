@@ -59,6 +59,7 @@
     "Deduplicación en plataforma por ID o URL canónica; entre plataformas solo por requisición corporativa o equivalencia documentada. Si es sospecha, mantener separada y pendiente. No fusionar solo por empresa y título.",
     "Nueva observación no equivale a nueva apertura. Republicación no equivale a demanda adicional. Conservar historial inmutable, consultas, evidencia y conteos reportados frente a extraídos.",
     "Captura completa requiere ejecutar todos los términos y revisar toda paginación accesible; documentar páginas, filtros y barreras. Captura parcial o bloqueada nunca se rellena con cero.",
+    "OCC: además de las búsquedas temáticas, registrar la categoría completa Tecnologías de la Información - Sistemas sin palabra clave en una captura de inventario separada. Conciliar el total visible, los IDs y la paginación, y documentar las tarjetas recomendadas ajenas al corte. Conservar los rótulos de fecha sin asignar fecha de primera publicación.",
     "Cortes: 25 nov–1 dic, 2–8 dic, 9–15 dic y 16–20 dic. El último corte tiene cinco días. Promedio observado = nuevas publicaciones únicas documentadas / días con cobertura válida, mostrando denominador; sin cobertura equivalente no reportar promedio comparable.",
     "Histórico 2025 solo fuente pública primaria, reporte de plataforma o registro propio verificable. Guardar periodo, país, familia, definición, unidad, fuente, fecha de recuperación y cobertura. Un agregado semestral no es una serie diaria ni una base comparable por especialidad.",
     "No calcular p-valores, intervalos, IDLT ni causalidad sin observaciones y supuestos suficientes. Simulación aritmética separada del registro observado. No reconstruir datos faltantes."
@@ -109,6 +110,13 @@
     "extracted_count",
     "source_urls"
   ],
+  "category_inventory": {
+    "field": "coverage[].category_inventory",
+    "fields": ["name", "date_window", "source_url", "results"],
+    "result_fields": ["platform_id", "publication_raw", "page", "url"],
+    "count_definition": "La fila de alcance general conserva reported_count y sus IDs en results. Su extracted_count es cero porque no introduce observaciones temáticas.",
+    "other_platforms": "Las filas de plataformas que no se midieron pueden referenciar su captura anterior con carried_forward_from y extracted_count = 0."
+  },
   "status_values": [
     "activa",
     "cerrada",
