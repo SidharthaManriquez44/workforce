@@ -764,3 +764,22 @@
 .history-summary {
     margin-top: 12px;
 }
+
+.search-results {
+    margin-top: 6px;
+}
+
+.search-results summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.search-results ol {
+    max-height: 280px;
+    overflow: auto;
+    padding-left: 20px;
+}
+
+.search-results li + li {
+    margin-top: 8px;
+}

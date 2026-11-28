@@ -120,9 +120,9 @@ function chart(id, items, title, digits = 0, maximum = null) {
     const top = maximum ?? Math.max(1, ...items.map(item => item[1] ?? 0));
     const height = 14 + items.length * 30;
     $(id).innerHTML = items.length ? `<svg viewBox="0 0 460 ${height}" role="img" aria-label="${esc(title)}">
-        ${items.map(([label, value], i) => {
+        ${items.map(([label, value, missing = 'N/D'], i) => {
             const y = 7 + i * 30;
-            const shown = fmt(value, digits);
+            const shown = value == null ? missing : fmt(value, digits);
             const width = value == null ? 0 : 220 * value / top;
             return `<g><title>${esc(label)} · ${shown}</title>
                 <text x="4" y="${y + 15}" fill="#53635f" font-size="12">${esc(label)}</text>
@@ -136,6 +136,34 @@ function periodLabel(week) {
     return shortDay(week.start) + ' – ' + shortDay(week.end);
 }
 
+function searchReconciliation(coverage) {
+    const results = coverage.search_results;
+    if (!Array.isArray(results) || !results.length) return '';
+    return `<details class="search-results"><summary>Ver ${fmt(results.length)} resultados conciliados</summary>
+        <ol>${results.map(r => `<li><b>${esc(r.title)}</b><br>
+            ${esc(r.company)} · ${esc(r.publication_raw)} · ID ${esc(r.platform_id)}<br>
+            ${r.in_scope ? 'En el estudio' : 'Fuera del estudio'} · ${esc(r.scope_reason)}</li>`).join('')}
+        </ol></details>`;
+}
+
+function renderCategoryInventories(inventories) {
+    const container = $('categoryInventories');
+    container.hidden = !inventories.length;
+    container.innerHTML = inventories.map(c => {
+        const inventory = c.category_inventory;
+        const results = inventory.results;
+        return `<div class="sectionhead"><div><h2>Inventario general de TI · ${esc(c.platform)}</h2>
+            <p>${esc(inventory.name)} · ${esc(inventory.date_window)}</p></div></div>
+            <p><strong>${fmt(c.reported_count)}</strong> resultados reportados · ${fmt(results.length)} IDs conciliados ·
+            ${fmt(c.pages_reviewed.length)} páginas revisadas.</p>
+            <p class="caption">El recuento registra resultados visibles de la categoría. La primera publicación y la vigencia se verifican por ficha.</p>
+            <details class="search-results"><summary>Ver ${fmt(results.length)} fichas de TI</summary>
+                <ol>${results.map(r => `<li>${esc(r.platform_id)} · ${esc(r.publication_raw)} · página ${esc(r.page)}
+                    ${/^https?:\/\//i.test(r.url) ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Abrir en ${esc(c.platform)}</a>` : ''}</li>`).join('')}
+                </ol></details>`;
+    }).join('');
+}
+
 function render(data) {
     const m = data.metrics;
     $('mobserved').textContent = m.observed;
@@ -147,7 +175,8 @@ function render(data) {
     $('coverage').innerHTML = data.coverage.map(c => '<div class="covrow"><b>' + esc(c.platform)
         + '</b><span class="tag ' + (c.status === 'completa' ? '' : 'amber') + '">'
         + esc(labels[c.status]) + '</span><div class="reason">' + esc(c.reason)
-        + '<br>' + esc(c.date || 'Sin captura') + '</div></div>').join('');
+        + '<br>' + esc(c.date || 'Sin captura') + searchReconciliation(c) + '</div></div>').join('');
+    renderCategoryInventories(data.category_inventories ?? []);
     $('weeklyrows').innerHTML = data.weekly.map(w => `<tr>
         <td>${esc(w.start)} — ${esc(w.end)}</td><td>${fmt(w.captures)}</td>
         <td>${w.valid_days} / ${w.elapsed_days}</td><td>${fmt(w.new)}</td>
@@ -155,7 +184,8 @@ function render(data) {
         <td><span class="tag ${w.daily_mean === null ? 'amber' : ''}">${w.elapsed_days === 0
             ? 'Pendiente' : w.daily_mean === null ? 'Cobertura o fechas insuficientes' : 'Periodo observado'}</span></td></tr>`).join('');
     chart('platformchart', data.coverage.map(c => [
-        c.platform, data.distribution.platform[c.platform] ?? (c.status === 'completa' ? 0 : null)
+        c.platform, data.distribution.platform[c.platform] ?? (c.status === 'completa' ? 0 : null),
+        c.status === 'pendiente' ? 'Sin captura' : 'Sin fichas'
     ]), 'Anuncios por plataforma');
     chart('familychart', Object.entries(data.distribution.family), 'Anuncios por especialidad');
     chart('serieschart', data.series.map(d => [shortDay(d.date), d.observed]), 'Observaciones diarias');
