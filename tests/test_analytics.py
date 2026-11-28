@@ -66,6 +66,37 @@ class AnalyticsTests(unittest.TestCase):
         self.assertEqual(result["weekly"][0]["elapsed_days"], 2)
         self.assertIsNone(result["weekly"][0]["daily_mean"])
 
+    def test_occ_followup_keeps_original_coverage_for_other_platforms(self):
+        original = capture("2026-11-25")
+        followup = capture(
+            "2026-11-26",
+            status="parcial",
+            records=[
+                listing(
+                    None,
+                    platform="OCC",
+                    publication_raw="Hoy",
+                    publication_precision="relativa",
+                    event="primera_observacion",
+                )
+            ],
+        )
+        for item in followup["coverage"]:
+            if item["platform"] != "OCC":
+                item["carried_forward_from"] = original["run_id"]
+
+        validate_run(followup)
+        state = {"runs": [original, followup]}
+        result = analyze(state, as_of="2026-11-26")
+        coverage_by_platform = {item["platform"]: item for item in result["coverage"]}
+        self.assertEqual(result["distribution"]["platform"]["OCC"], 1)
+        self.assertIsNone(result["metrics"]["new"])
+        self.assertEqual(coverage_by_platform["OCC"]["date"], "2026-11-26")
+        self.assertEqual(coverage_by_platform["Indeed"]["date"], "2026-11-25")
+        indeed = analyze(state, {"platform": "Indeed"}, as_of="2026-11-26")
+        self.assertEqual(indeed["metrics"]["last_day"], "2026-11-25")
+        self.assertEqual(indeed["weekly"][0]["captures"], 1)
+
     def test_late_evidence_counts_as_original_day_and_deduplicates(self):
         state = {
             "runs": [
@@ -90,6 +121,43 @@ class AnalyticsTests(unittest.TestCase):
         selected = analyze(state, {"to": "2026-11-25"}, as_of="2026-11-26")
         self.assertEqual(selected["series"][0]["documented_new"], 1)
         self.assertEqual(selected["weekly"][0]["daily_mean"], 1)
+
+    def test_category_inventory_has_its_own_count_and_coverage(self):
+        original = capture("2026-11-25")
+        audit = capture("2026-11-26", status="parcial")
+        for item in audit["coverage"]:
+            if item["platform"] != "OCC":
+                item["carried_forward_from"] = original["run_id"]
+                continue
+            item["reported_count"] = 1
+            item["category_inventory"] = {
+                "name": "TI y Sistemas",
+                "date_window": "Hace 2 días",
+                "source_url": "https://example.org/it",
+                "results": [
+                    {
+                        "platform_id": "123",
+                        "url": "https://example.org/123",
+                        "publication_raw": "Ayer",
+                        "page": 1,
+                    }
+                ],
+            }
+
+        validate_run(audit)
+        state = {"runs": [original, audit]}
+        result = analyze(state, {"platform": "OCC"}, as_of="2026-11-26")
+        self.assertEqual(result["category_inventories"][0]["reported_count"], 1)
+        self.assertEqual(result["coverage"][0]["date"], "2026-11-25")
+        self.assertEqual(result["weekly"][0]["captures"], 1)
+        self.assertEqual(result["metrics"]["observed"], 0)
+
+        occ = next(c for c in audit["coverage"] if c["platform"] == "OCC")
+        occ["reported_count"] = 2
+        rows = occ["category_inventory"]["results"]
+        rows.append(dict(rows[0]))
+        with self.assertRaisesRegex(Invalid, "ID repetido"):
+            validate_run(audit)
 
     def test_revalidation_preserves_history_and_does_not_carry_active_forward(self):
         active = listing(
